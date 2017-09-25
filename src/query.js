@@ -56,6 +56,13 @@ module.exports = {
     return knex('user')
       .where({id})
       .first()
+  },
+
+  // title, complete를 객체로 하면 각자 수정이 가능하다. => index.js
+  updateTodoById(id, {title, complete}) {
+    return knex('todolist')
+      .where({id})
+      .update({title, complete})
   }
 
 

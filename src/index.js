@@ -77,7 +77,28 @@ app.post('/todos', authMiddleware, (req, res) => {
       return query.getTodoById(id)
     })
     .then(todo => {
+      // 201 = create
       res.status(201)
+      res.send(todo)
+    })
+})
+
+app.patch('/todos/:id', authMiddleware, (req, res) => {
+  // query.updateTodoById(1, {title: 'new title'})
+  // query.updateTodoById(1, {complete: true})
+  // query.updateTodoById(1, {title: 'new title', complete: true})
+  const user_id = req.params.id
+  const title = req.body.title
+  const complete = req.body.complete
+
+  query.updateTodoById(user_id, {title, complete})
+  // knex 문서에는 [id]로 받아와야한다고 하지만 id로 받아와야지 값이 들어간다.
+    .then(id => {
+      return query.getTodoById(id)
+    })
+    .then(todo => {
+      // 200 = success
+      res.status(200)
       res.send(todo)
     })
 })
@@ -90,6 +111,9 @@ app.use(function (err, req, res, next) {
     })
   }
 })
+
+
+
 
 app.listen(process.env.PORT, () => {
   console.log('connect!!!')

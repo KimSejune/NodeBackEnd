@@ -53,7 +53,7 @@ module.exports = {
   },
 
   getTodoById(id) {
-    return knex('user')
+    return knex('todolist')
       .where({id})
       .first()
   },
@@ -63,7 +63,12 @@ module.exports = {
     return knex('todolist')
       .where({id})
       .update({title, complete})
-  }
+  },
 
+  deleteTodoById(id) {
+    return knex('todolist')
+    .where({id})
+    .delete()
+  }
 
 }
